@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MafiaServer.Migrations
 {
-    public partial class initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,7 +25,6 @@ namespace MafiaServer.Migrations
                 columns: table => new
                 {
                     ID = table.Column<Guid>(nullable: false),
-                    MyProperty = table.Column<int>(nullable: false),
                     GameTime = table.Column<TimeSpan>(nullable: false),
                     VoteTime = table.Column<TimeSpan>(nullable: false),
                     RoomId = table.Column<Guid>(nullable: false)
@@ -40,8 +39,11 @@ namespace MafiaServer.Migrations
                 columns: table => new
                 {
                     ID = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     GameCreatorId = table.Column<Guid>(nullable: false),
-                    GameSessionId = table.Column<Guid>(nullable: false)
+                    GameSessionId = table.Column<Guid>(nullable: false),
+                    MafiaAmount = table.Column<int>(nullable: false),
+                    CivilAmount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

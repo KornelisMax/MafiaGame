@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MafiaServer.Migrations
 {
     [DbContext(typeof(MafiaContext))]
-    [Migration("20200515104714_initial")]
-    partial class initial
+    [Migration("20200515201340_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,9 +46,6 @@ namespace MafiaServer.Migrations
 
                     b.Property<TimeSpan>("GameTime")
                         .HasColumnType("time");
-
-                    b.Property<int>("MyProperty")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("RoomId")
                         .HasColumnType("uniqueidentifier");
@@ -101,11 +98,22 @@ namespace MafiaServer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("CivilAmount")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("GameCreatorId")
+                        .HasColumnName("GameCreatorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("GameSessionId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("MafiaAmount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnName("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 

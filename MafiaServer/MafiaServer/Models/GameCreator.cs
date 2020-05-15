@@ -17,5 +17,6 @@ namespace MafiaServer.Models
         [ForeignKey("Room")]
         public Guid RoomId { get; set; }
 
+
     }
 }

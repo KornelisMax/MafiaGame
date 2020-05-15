@@ -11,7 +11,7 @@ namespace MafiaServer.Models
     public class Player
     {
         [Key]
-        public Guid ID{ get; set; }
+        public Guid ID { get; set; }
         public string Role { get; set; }
         public string Name { get; set; }
         [ForeignKey("Room")]
@@ -21,4 +21,5 @@ namespace MafiaServer.Models
         [ForeignKey("GameSession")]
         public Guid GameSessionId { get; set; }
     }
+
 }

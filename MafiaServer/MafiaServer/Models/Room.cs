@@ -12,11 +12,17 @@ namespace MafiaServer.Models
     {
         [Key]
         public Guid ID { get; set; }
+        [Column("Name")]
+        public string Name { get; set; }
+
         [ForeignKey("Player")]
-        public List<Player> Players { get; set; }
+        public ICollection<Player> Players { get; set; }
+        [Column("GameCreatorId")]
         [ForeignKey("GameCreator")]
         public Guid GameCreatorId { get; set; }
         [ForeignKey("GameSession")]
         public Guid GameSessionId { get; set; }
+        public int MafiaAmount { get; set; }
+        public int CivilAmount { get; set; }
     }
 }

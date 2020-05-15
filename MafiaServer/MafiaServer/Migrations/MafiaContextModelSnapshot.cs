@@ -45,9 +45,6 @@ namespace MafiaServer.Migrations
                     b.Property<TimeSpan>("GameTime")
                         .HasColumnType("time");
 
-                    b.Property<int>("MyProperty")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("RoomId")
                         .HasColumnType("uniqueidentifier");
 
@@ -99,11 +96,22 @@ namespace MafiaServer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("CivilAmount")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("GameCreatorId")
+                        .HasColumnName("GameCreatorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("GameSessionId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("MafiaAmount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnName("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
