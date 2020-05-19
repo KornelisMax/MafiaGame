@@ -29,6 +29,7 @@ namespace MafiaServer.Controllers
         [Route("api/GetP")]
         public IEnumerable<string> Get()
         {
+            Dataset.AddSamplePlayersToDb(_context);
             return new string[] { "value1", "value2" };
         }
 
@@ -48,8 +49,7 @@ namespace MafiaServer.Controllers
         {
           
             
-            _context.Rooms.Add(new Room() { ID = new Guid() });
-            _context.SaveChanges();
+            
            
             
 
