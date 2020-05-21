@@ -9,7 +9,6 @@ import android.widget.Button;
 
 import com.example.myapplication.R;
 import com.example.myapplication.ui.main.MainFragment;
-import com.example.myapplication.view.InstructionActivity;
 
 public class MainActivity extends AppCompatActivity {
 
