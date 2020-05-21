@@ -6,6 +6,7 @@ using MafiaServer.Models;
 using MafiaServer.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -27,10 +28,10 @@ namespace MafiaServer.Controllers
         // GET: api/Room
         [HttpGet]
         [Route("api/GetP")]
-        public IEnumerable<string> Get()
+        public List<Player> Get()
         {
             Dataset.AddSamplePlayersToDb(_context);
-            return new string[] { "value1", "value2" };
+            return _context.Players.ToList();
         }
 
         // GET: api/Room/5

@@ -21,7 +21,7 @@ namespace MafiaServer.Repository
         public DbSet<GameCreator> GameCreators{ get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\ProjectsV13;Initial Catalog=MafiaDB;");
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\mssqllocaldb;Initial Catalog=MafiaDB;");
         }
 
     }
