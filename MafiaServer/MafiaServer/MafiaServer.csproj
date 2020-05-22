@@ -15,6 +15,38 @@
     <Compile Remove="Migrations\20200515200418_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20200515200900_InitialCreate.cs" />
     <Compile Remove="Migrations\20200515200900_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200515201340_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200515201340_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200521144147_GameSessionFKRemove.cs" />
+    <Compile Remove="Migrations\20200521144147_GameSessionFKRemove.Designer.cs" />
+    <Compile Remove="Migrations\20200521215012_PlayerFKRemove.cs" />
+    <Compile Remove="Migrations\20200521215012_PlayerFKRemove.Designer.cs" />
+    <Compile Remove="Migrations\20200521215947_RemovedUnusedFks.cs" />
+    <Compile Remove="Migrations\20200521215947_RemovedUnusedFks.Designer.cs" />
+    <Compile Remove="Migrations\20200521220338_AddedPlayerFkToRoom.cs" />
+    <Compile Remove="Migrations\20200521220338_AddedPlayerFkToRoom.Designer.cs" />
+    <Compile Remove="Migrations\20200522104533_addedRoomFk.cs" />
+    <Compile Remove="Migrations\20200522104533_addedRoomFk.Designer.cs" />
+    <Compile Remove="Migrations\20200522110013_addedRoomFk.cs" />
+    <Compile Remove="Migrations\20200522110013_addedRoomFk.Designer.cs" />
+    <Compile Remove="Migrations\20200522110753_fixingFkErrors.cs" />
+    <Compile Remove="Migrations\20200522110753_fixingFkErrors.Designer.cs" />
+    <Compile Remove="Migrations\20200522111409_fixingFkErrors.cs" />
+    <Compile Remove="Migrations\20200522111409_fixingFkErrors.Designer.cs" />
+    <Compile Remove="Migrations\20200522111800_fixingFkErrors2.cs" />
+    <Compile Remove="Migrations\20200522111800_fixingFkErrors2.Designer.cs" />
+    <Compile Remove="Migrations\20200522111852_fixingFkErrors3.cs" />
+    <Compile Remove="Migrations\20200522111852_fixingFkErrors3.Designer.cs" />
+    <Compile Remove="Migrations\20200522112022_fixingFkErrors3.cs" />
+    <Compile Remove="Migrations\20200522112022_fixingFkErrors3.Designer.cs" />
+    <Compile Remove="Migrations\20200522112244_fixingFkErrors3.cs" />
+    <Compile Remove="Migrations\20200522112244_fixingFkErrors3.Designer.cs" />
+    <Compile Remove="Migrations\20200522112624_fixingFkErrors3.cs" />
+    <Compile Remove="Migrations\20200522112624_fixingFkErrors3.Designer.cs" />
+    <Compile Remove="Migrations\20200522113513_fixingFkErrors3.cs" />
+    <Compile Remove="Migrations\20200522113513_fixingFkErrors3.Designer.cs" />
+    <Compile Remove="Migrations\20200522115043_fixingFkErrors.cs" />
+    <Compile Remove="Migrations\20200522115043_fixingFkErrors.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

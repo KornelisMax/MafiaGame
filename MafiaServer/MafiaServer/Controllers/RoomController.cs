@@ -26,11 +26,11 @@ namespace MafiaServer.Controllers
 
         // GET: api/Room
         [HttpGet]
-        [Route("api/GetP")]
-        public IEnumerable<string> Get()
+        [Route("api/GetPlayers")]
+        public List<Player> Get()
         {
-            Dataset.AddSamplePlayersToDb(_context);
-            return new string[] { "value1", "value2" };
+            //Dataset.AddSamplePlayersToDb(_context);
+            return _context.Players.ToList();
         }
 
         // GET: api/Room/5
@@ -45,19 +45,24 @@ namespace MafiaServer.Controllers
         // POST: api/Room
         [HttpPost]
         [Route("api/CreateNewRoom")]
-        public void PostNewRoom(string name, int civilAmount, int mafiaAmount, Guid creatorId)
+        public void CreateNewRoom(string name, int civilAmount, int mafiaAmount, string playerName)
         {
-          
-            
-            
-           
-            
-
+            _context.Players.Add(new Player() { PlayerId = new Guid(), Name = playerName, RoomId = new Guid("49a20b2e-f469-4614-1649-08d7f90d4961") });
+            Room room = new Room()
+            {
+                RoomId = new Guid("49a20b2e-f469-4614-1649-08d7f90d4961"),
+                CivilAmount = civilAmount,
+                MafiaAmount = mafiaAmount,
+                Name = name,
+                Players = _context.Players.ToList()
+            };
+            _context.Rooms.Add(room);
+            _context.SaveChanges();
         }
 
         // PUT: api/Room/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async void Put(int id, [FromBody] string value)
         {
         }
 

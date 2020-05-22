@@ -38,7 +38,7 @@ namespace MafiaServer.Migrations
 
             modelBuilder.Entity("MafiaServer.Models.GameSession", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("GameSessionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -51,18 +51,15 @@ namespace MafiaServer.Migrations
                     b.Property<TimeSpan>("VoteTime")
                         .HasColumnType("time");
 
-                    b.HasKey("ID");
+                    b.HasKey("GameSessionId");
 
                     b.ToTable("GameSession");
                 });
 
             modelBuilder.Entity("MafiaServer.Models.Player", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("PlayerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("GameSessionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("HasVoted")
@@ -74,46 +71,35 @@ namespace MafiaServer.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("Player")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("RoomId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("ID");
+                    b.HasKey("PlayerId");
 
-                    b.HasIndex("Player");
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Player");
                 });
 
             modelBuilder.Entity("MafiaServer.Models.Room", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("RoomId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CivilAmount")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("GameCreatorId")
-                        .HasColumnName("GameCreatorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("GameSessionId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("MafiaAmount")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnName("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("RoomId");
 
                     b.ToTable("Room");
                 });
@@ -137,13 +123,11 @@ namespace MafiaServer.Migrations
 
             modelBuilder.Entity("MafiaServer.Models.Player", b =>
                 {
-                    b.HasOne("MafiaServer.Models.GameSession", null)
+                    b.HasOne("MafiaServer.Models.Room", "Room")
                         .WithMany("Players")
-                        .HasForeignKey("Player");
-
-                    b.HasOne("MafiaServer.Models.Room", null)
-                        .WithMany("Players")
-                        .HasForeignKey("Player");
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

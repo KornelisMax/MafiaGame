@@ -11,10 +11,12 @@ namespace MafiaServer.Models
     public class Vote
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid VoteId { get; set; }
         [ForeignKey("Player")]
         public Guid VotingPlayerId { get; set; }
         [ForeignKey("Player")]
         public Guid VotedPlayerId { get; set; }
+
     }
 }
