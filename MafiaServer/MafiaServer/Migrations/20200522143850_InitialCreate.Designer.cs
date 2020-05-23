@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MafiaServer.Migrations
 {
     [DbContext(typeof(MafiaContext))]
-    [Migration("20200522121217_InitialCreate")]
+    [Migration("20200522143850_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

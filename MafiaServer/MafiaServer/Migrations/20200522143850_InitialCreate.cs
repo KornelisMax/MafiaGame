@@ -70,7 +70,7 @@ namespace MafiaServer.Migrations
                     Name = table.Column<string>(nullable: true),
                     IsAlive = table.Column<bool>(nullable: false),
                     HasVoted = table.Column<bool>(nullable: false),
-                    RoomId = table.Column<Guid>(nullable: true)
+                    RoomId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {

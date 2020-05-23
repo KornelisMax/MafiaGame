@@ -11,7 +11,6 @@ namespace MafiaServer.Models
     public class GameCreator
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid ID { get; set; }
         [ForeignKey("Player")]
         public Guid PlayerId { get; set; }
