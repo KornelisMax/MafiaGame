@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace MafiaServer.Controllers
 {
-    
+
     [ApiController]
     public class RoomController : ControllerBase
     {
@@ -34,6 +34,12 @@ namespace MafiaServer.Controllers
             return _context.Players.ToList();
         }
 
+        [HttpGet]
+        [Route("api/FillData")]
+        public void FillData()
+        {
+            Dataset.AddSamplePlayersToDb(_context);
+        }
         // GET: api/Room/5
         //[HttpGet]
         //[Route("api/GetRooms")]
@@ -46,15 +52,17 @@ namespace MafiaServer.Controllers
         // POST: api/Room
         [HttpPost]
         [Route("api/CreateNewRoom")]
-        public void CreateNewRoom(string name, int civilAmount, int mafiaAmount, string playerName)
-        {
-            _context.Players.Add(new Player() { PlayerId = new Guid(), Name = playerName, RoomId = new Guid("49a20b2e-f469-4614-1649-08d7f90d4961") });
+        [Consumes("application/x-www-form-urlencoded")]
+        public void CreateNewRoom([FromForm]Class classResponder)
+        {   
+            //Console.WriteLine(classResponder.name);
+            _context.Players.Add(new Player() { PlayerId = new Guid(), Name = classResponder.playerName, RoomId = new Guid("49a20b2e-f469-4614-1649-08d7f90d4960") });
             Room room = new Room()
             {
-                RoomId = new Guid("49a20b2e-f469-4614-1649-08d7f90d4961"),
-                CivilAmount = civilAmount,
-                MafiaAmount = mafiaAmount,
-                Name = name,
+                RoomId = Guid.NewGuid(),
+                CivilAmount = classResponder.civilAmount,
+                MafiaAmount = classResponder.mafiaAmount,
+                Name = classResponder.name,
                 Players = _context.Players.ToList()
             };
             _context.Rooms.Add(room);
