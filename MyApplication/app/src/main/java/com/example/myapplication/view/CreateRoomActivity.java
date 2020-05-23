@@ -2,6 +2,7 @@ package com.example.myapplication.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -45,7 +46,8 @@ public class CreateRoomActivity extends AppCompatActivity {
     Button enterData;
 
     private StringRequest mStringRequest;
-    List<String> playerNicks = new ArrayList<String>();
+    ArrayList<String> playerNicks = new ArrayList<String>();
+
 
 
     @Override
@@ -67,9 +69,11 @@ public class CreateRoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //sendAndRequestResponse();
-                //requestPlayerData();
+                //getPlayersData();
+                //getPlayersData();
+                showGameLobby();
                 //sendWorkPostRequest();
-               HttpPOSTRequestWithParameters();
+                //HttpPOSTRequestWithParameters()
 
             }
         });
@@ -79,19 +83,17 @@ public class CreateRoomActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://10.0.2.2:63439/api/CreateNewRoom";
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>()
-                {
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.d("Response", response);
 
                     }
                 },
-                new Response.ErrorListener()
-                {
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("ERROR","error => "+error.toString());
+                        Log.d("ERROR", "error => " + error.toString());
                     }
                 }
         ) {
@@ -107,9 +109,8 @@ public class CreateRoomActivity extends AppCompatActivity {
 
             // this is the relevant method
             @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String>  params = new HashMap<String, String>();
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("name", cityNameInput.getText().toString());
                 // volley will escape this for you
                 //params.put("randomFieldFilledWithAwkwardCharacters", "{{%stuffToBe Escaped/");
@@ -126,7 +127,8 @@ public class CreateRoomActivity extends AppCompatActivity {
 
                     String json = new String(response.networkResponse.data, HttpHeaderParser.parseCharset(response.networkResponse.headers));
                     Log.e("tag", "reponse error = " + json);
-                }catch (Exception e){}
+                } catch (Exception e) {
+                }
                 return super.parseNetworkError(response);
             }
 
@@ -137,39 +139,20 @@ public class CreateRoomActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(postRequest);
+        showGameLobby();
     }
 
-        //gets players nicks and then adds them to arraylist
-    public void requestPlayerData() {
-        String url = "http://10.0.2.2:63439/api/GetPlayers";
 
-        RequestQueue queue = Volley.newRequestQueue(this);
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                try{
-                    if (response != null) {
-                        for(int i = 0; i < response.length(); i++){
-                            JSONObject obj = response.getJSONObject(i);
-                            name = obj.getString("name");
-                            if(!playerNicks.contains(name)) {
-                                playerNicks.add(name);
-                            }
-                        }
-                        Toast.makeText(CreateRoomActivity.this, response+name+"", Toast.LENGTH_SHORT).show();
-                    }
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("LOG", error.toString());
-            }
-        });
-        queue.add(jsonArrayRequest);
+
+
+
+    public void showGameLobby(){
+        Intent intent = new Intent(this, GameLobbyActivity.class);
+        intent.putStringArrayListExtra("arg", playerNicks);
+        startActivity(intent);
     }
+
+
 }
 
