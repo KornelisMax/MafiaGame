@@ -2,10 +2,13 @@ package com.example.myapplication.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.RequestQueue;
@@ -30,6 +33,7 @@ public class GameLobbyActivity extends AppCompatActivity {
     String name;
     ArrayList arrayList = new ArrayList();
     String[] list;
+    Button startGameButton;
 
 
     @Override
@@ -38,15 +42,17 @@ public class GameLobbyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_lobby);
         listView = findViewById(R.id.listView);
         final ArrayList<String> tubeLines = new ArrayList<>();
-
-        //playerNicks = getIntent().getExtras().getStringArrayList("arg");
-        arrayList.add(0,"test");
-        arrayList.add(1,"test2");
         //getPlayersData();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tubeLines);
         listView.setAdapter(adapter);
         getPlayersData(tubeLines, adapter);
-
+        startGameButton = findViewById(R.id.StartGameButton);
+        startGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showGameLobby();
+            }
+        });
     }
 
     public ArrayList<String> getPlayersData(final ArrayList<String> tubeLines, final ArrayAdapter<String> adapter) {
@@ -84,6 +90,11 @@ public class GameLobbyActivity extends AppCompatActivity {
 
         queue.add(jsonArrayRequest);
         return playerNicks;
+    }
+    public void showGameLobby(){
+        Intent intent = new Intent(this, MainActivity.class);
+        //intent.putStringArrayListExtra("arg", playerNicks);
+        startActivity(intent);
     }
 
     }
