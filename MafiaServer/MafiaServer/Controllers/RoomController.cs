@@ -87,6 +87,7 @@ namespace MafiaServer.Controllers
             //_context.Rooms.Add(room);
             Service service = new Service();
             service.KillPlayer(_context);
+            service.WhichSideWon(_context, classResponder.votingPlayer);
             _context.SaveChanges();
         }
 
