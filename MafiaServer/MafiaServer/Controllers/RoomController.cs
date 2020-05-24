@@ -31,6 +31,15 @@ namespace MafiaServer.Controllers
             return _context.Players.Where(x => x.IsAlive == true).ToList();
         }
 
+        [HttpGet]
+        [Route("api/GetGameStatus")]
+        public int GetGameStatus(string votingPlayer)
+        {
+            Service service = new Service();
+            //Dataset.AddSamplePlayersToDb(_context);
+            return service.WhichSideWon(_context, votingPlayer);
+        }
+
         // GET: api/Room
         [HttpGet]
         [Route("api/GetPlayers")]
@@ -86,10 +95,27 @@ namespace MafiaServer.Controllers
             _context.Votes.Add(new Vote() { VotedPlayerId = votedPlayerId, VoteId = Guid.NewGuid(), VotingPlayerId = votingPlayerId });
             //_context.Rooms.Add(room);
             Service service = new Service();
+            //service.WhichSideWon(_context, classResponder.votingPlayer);
+            _context.SaveChanges();
             service.KillPlayer(_context);
-            service.WhichSideWon(_context, classResponder.votingPlayer);
+        }
+
+        [HttpGet]
+        [Route("api/Vote1")]
+        [Consumes("application/x-www-form-urlencoded")]
+        public void GetWinningSide([FromForm]VoteResponder classResponder)
+        {
+            //Console.WriteLine(classResponder.name);
+            var votingPlayerId = _context.Players.Where(x => x.Name == classResponder.votingPlayer).FirstOrDefault().PlayerId;
+            var votedPlayerId = _context.Players.Where(x => x.Name == classResponder.votedPlayer).FirstOrDefault().PlayerId;
+            _context.Votes.Add(new Vote() { VotedPlayerId = votedPlayerId, VoteId = Guid.NewGuid(), VotingPlayerId = votingPlayerId });
+            //_context.Rooms.Add(room);
+            Service service = new Service();
+            service.KillPlayer(_context);
+            //service.WhichSideWon(_context, classResponder.votingPlayer);
             _context.SaveChanges();
         }
+
 
         // PUT: api/Room/5
         [HttpPut("{id}")]
