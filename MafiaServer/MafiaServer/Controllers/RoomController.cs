@@ -69,6 +69,19 @@ namespace MafiaServer.Controllers
             _context.SaveChanges();
         }
 
+        [HttpPost]
+        [Route("api/Vote")]
+        [Consumes("application/x-www-form-urlencoded")]
+        public void Vote([FromForm]VoteResponder classResponder)
+        {
+            //Console.WriteLine(classResponder.name);
+            var votingPlayerId = _context.Players.Where(x => x.Name == classResponder.votingPlayer).FirstOrDefault().PlayerId;
+            var votedPlayerId = _context.Players.Where(x => x.Name == classResponder.votedPlayer).FirstOrDefault().PlayerId;
+            _context.Votes.Add(new Vote() { VotedPlayerId = votingPlayerId, VoteId = Guid.NewGuid(), VotingPlayerId = votingPlayerId });
+            //_context.Rooms.Add(room);
+            _context.SaveChanges();
+        }
+
         // PUT: api/Room/5
         [HttpPut("{id}")]
         public async void Put(int id, [FromBody] string value)
