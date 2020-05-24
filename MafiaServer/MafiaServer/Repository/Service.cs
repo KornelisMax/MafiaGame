@@ -49,26 +49,38 @@ namespace MafiaServer.Repository
         public int WhichSideWon(MafiaContext _context, string votingPlayer)
         {
             bool isWinningCivil;
+            int flag;
+            string mafia = "Mafia";
+            string civil = "Civil";
             var currentRoom = _context.Players
-                                        .Where(x => x.Name == votingPlayer)
-                                        .FirstOrDefault().RoomId;
+                                            .Where(x => x.Name == votingPlayer)
+                                            .FirstOrDefault().RoomId;
 
             var playersInSameRoom = _context.Players
-                                            .Where(x => x.RoomId == currentRoom)
-                                            .ToList();
+                                                    .Where(x => x.RoomId == currentRoom)
+                                                    .ToList();
 
-            if(isWinningCivil = _context.Players
-                                            .Any(x => x.IsAlive == false && x.Role.Equals("Mafia")))
+            var isMafiaAlive = playersInSameRoom
+                                                .Where(x => x.IsAlive == true && x.Role == mafia)
+                                                .FirstOrDefault();
+
+            if (isMafiaAlive == null)
             {
-                return 2;
+                flag = 2;
+                return flag;
             }
 
-            if (isWinningCivil = _context.Players
-                                            .Any(x => x.IsAlive == false && x.Role.Equals("Civil")))
+            var isCivilAlive = playersInSameRoom
+                                                .Where(x => x.IsAlive == true&& x.Role.Equals(civil))
+                                                .FirstOrDefault();
+
+            if (isCivilAlive == null)
             {
-                return 1;
+                flag = 1;
+                return flag;
             }
-            return 0;
+            flag = 0;
+            return flag;
         }
 
 

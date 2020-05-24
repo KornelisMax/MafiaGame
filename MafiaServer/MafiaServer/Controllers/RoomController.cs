@@ -36,8 +36,9 @@ namespace MafiaServer.Controllers
         public int GetGameStatus(string votingPlayer)
         {
             Service service = new Service();
+            int flag = service.WhichSideWon(_context, votingPlayer);
             //Dataset.AddSamplePlayersToDb(_context);
-            return service.WhichSideWon(_context, votingPlayer);
+            return flag;
         }
 
         // GET: api/Room
