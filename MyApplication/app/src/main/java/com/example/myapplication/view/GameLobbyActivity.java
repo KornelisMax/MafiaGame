@@ -74,8 +74,6 @@ public class GameLobbyActivity extends AppCompatActivity {
                             }
                         }
                         adapter.notifyDataSetChanged();
-
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

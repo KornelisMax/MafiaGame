@@ -13,9 +13,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameSessionActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -48,7 +59,7 @@ public class GameSessionActivity extends AppCompatActivity implements AdapterVie
         setContentView(R.layout.activity_game_session);
         listView = findViewById(R.id.PlayerList);
         timerTextView = findViewById(R.id.TimerTextView);
-        MyCount counter = new MyCount(10000, 1000, this);
+        MyCount counter = new MyCount(10000, 1000);
         counter.start();
 
 
@@ -60,22 +71,25 @@ public class GameSessionActivity extends AppCompatActivity implements AdapterVie
         listView.setOnItemClickListener(this);
     }
 
+
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.i("HelloListView", "You clicked Item: " + id + " at position:" + position);
+        Log.i("HelloListView", playerName + "You clicked Item: " + id + " at position:" + position);
         clickedId = (int)id;
     }
 
     public class MyCount extends CountDownTimer {
 
-        public MyCount(long millisInFuture, long countDownInterval, GameSessionActivity gameSessionActivity) {
+        public MyCount(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
         }
 
         @Override
         public void onFinish() {
-
-            Intent intent = new Intent(GameSessionActivity.this, GameLobbyActivity.class);
+            //playerName = playerNicks.get(clickedId);
+            HttpPOSTRequestWithParameters();
+            Intent intent = new Intent(GameSessionActivity.this, VotingTimeoutActivity.class);
             Log.i("HelloListView", playerNicks.get(clickedId));
             intent.putExtra("arg", playerNicks.get(clickedId));
             intent.putExtra("args", playerName); //current player
@@ -89,5 +103,70 @@ public class GameSessionActivity extends AppCompatActivity implements AdapterVie
             timerTextView.setText("Left: " + millisUntilFinished / 1000);
         }
     }
+
+
+    public void HttpPOSTRequestWithParameters() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://10.0.2.2:63439/api/Vote";
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("Response", response);
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("ERROR", "error => " + error.toString());
+                    }
+                }
+        ) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                //..add other headers
+                return params;
+            }
+
+
+            // this is the relevant method
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("votedPlayer", playerNicks.get(clickedId));
+                params.put("votingPlayer", "Tomas");
+                // volley will escape this for you
+                //playerName = playerNameInput.getText().toString();
+                //params.put("randomFieldFilledWithAwkwardCharacters", "{{%stuffToBe Escaped/");
+
+
+                return params;
+            }
+
+            @Override
+            protected VolleyError parseNetworkError(VolleyError response) {
+                try {
+
+                    String json = new String(response.networkResponse.data, HttpHeaderParser.parseCharset(response.networkResponse.headers));
+                    Log.e("tag", "reponse error = " + json);
+                } catch (Exception e) {
+                }
+                return super.parseNetworkError(response);
+            }
+
+
+        };
+        postRequest.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(postRequest);
+        //showGameLobby();
+    }
+
 
 }
