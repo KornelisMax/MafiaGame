@@ -50,7 +50,7 @@ public class GameLobbyActivity extends AppCompatActivity {
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showGameLobby();
+                showGameLobby(tubeLines);
             }
         });
     }
@@ -91,9 +91,9 @@ public class GameLobbyActivity extends AppCompatActivity {
         queue.add(jsonArrayRequest);
         return playerNicks;
     }
-    public void showGameLobby(){
-        Intent intent = new Intent(this, MainActivity.class);
-        //intent.putStringArrayListExtra("arg", playerNicks);
+    public void showGameLobby(ArrayList<String> tubeLines){
+        Intent intent = new Intent(this, GameSessionActivity.class);
+        intent.putStringArrayListExtra("arg", tubeLines);
         startActivity(intent);
     }
 

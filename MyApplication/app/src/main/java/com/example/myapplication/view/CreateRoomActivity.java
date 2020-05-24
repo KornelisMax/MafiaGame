@@ -34,6 +34,7 @@ import java.util.Map;
 public class CreateRoomActivity extends AppCompatActivity {
 
     EditText playerNameInput;
+    String playerName;
     EditText cityNameInput;
     EditText mafiaAmountInput;
     EditText civilAmountInput;
@@ -113,6 +114,7 @@ public class CreateRoomActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("name", cityNameInput.getText().toString());
                 // volley will escape this for you
+                playerName = playerNameInput.getText().toString();
                 //params.put("randomFieldFilledWithAwkwardCharacters", "{{%stuffToBe Escaped/");
                 params.put("playerName", playerNameInput.getText().toString());
                 params.put("civilAmount", civilAmountInput.getText().toString());
@@ -150,6 +152,7 @@ public class CreateRoomActivity extends AppCompatActivity {
     public void showGameLobby(){
         Intent intent = new Intent(this, GameLobbyActivity.class);
         intent.putStringArrayListExtra("arg", playerNicks);
+        intent.putExtra("args", playerName);
         startActivity(intent);
     }
 
