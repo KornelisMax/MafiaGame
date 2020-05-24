@@ -31,6 +31,7 @@ public class GameLobbyActivity extends AppCompatActivity {
     ListView listView;
     List<String> passedArg;
     String name;
+    String playerName;
     ArrayList arrayList = new ArrayList();
     String[] list;
     Button startGameButton;
@@ -42,7 +43,8 @@ public class GameLobbyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_lobby);
         listView = findViewById(R.id.listView);
         final ArrayList<String> tubeLines = new ArrayList<>();
-        //getPlayersData();
+        Bundle extras = getIntent().getExtras();
+        playerName = extras.getString("args");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tubeLines);
         listView.setAdapter(adapter);
         getPlayersData(tubeLines, adapter);
@@ -92,6 +94,7 @@ public class GameLobbyActivity extends AppCompatActivity {
     public void showGameLobby(ArrayList<String> tubeLines){
         Intent intent = new Intent(this, GameSessionActivity.class);
         intent.putStringArrayListExtra("arg", tubeLines);
+        intent.putExtra("args", playerName);
         startActivity(intent);
     }
 

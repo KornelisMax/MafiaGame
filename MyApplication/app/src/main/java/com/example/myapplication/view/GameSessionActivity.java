@@ -138,7 +138,7 @@ public class GameSessionActivity extends AppCompatActivity implements AdapterVie
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("votedPlayer", playerNicks.get(clickedId));
-                params.put("votingPlayer", "Tomas");
+                params.put("votingPlayer", "Tomas"); //hardcoded
                 Log.i("HelloListView", playerNicks.get(clickedId));
                 // volley will escape this for you
                 //playerName = playerNameInput.getText().toString();
