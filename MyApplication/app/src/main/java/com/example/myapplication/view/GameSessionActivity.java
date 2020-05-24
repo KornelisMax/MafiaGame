@@ -139,6 +139,7 @@ public class GameSessionActivity extends AppCompatActivity implements AdapterVie
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("votedPlayer", playerNicks.get(clickedId));
                 params.put("votingPlayer", "Tomas");
+                Log.i("HelloListView", playerNicks.get(clickedId));
                 // volley will escape this for you
                 //playerName = playerNameInput.getText().toString();
                 //params.put("randomFieldFilledWithAwkwardCharacters", "{{%stuffToBe Escaped/");

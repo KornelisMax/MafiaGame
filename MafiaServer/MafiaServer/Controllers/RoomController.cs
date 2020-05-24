@@ -23,7 +23,13 @@ namespace MafiaServer.Controllers
             _context = context;
         }
 
-
+        [HttpGet]
+        [Route("api/GetAlivePlayers")]
+        public List<Player> GetAlive()
+        {
+            //Dataset.AddSamplePlayersToDb(_context);
+            return _context.Players.Where(x => x.IsAlive == true).ToList();
+        }
 
         // GET: api/Room
         [HttpGet]
@@ -77,8 +83,10 @@ namespace MafiaServer.Controllers
             //Console.WriteLine(classResponder.name);
             var votingPlayerId = _context.Players.Where(x => x.Name == classResponder.votingPlayer).FirstOrDefault().PlayerId;
             var votedPlayerId = _context.Players.Where(x => x.Name == classResponder.votedPlayer).FirstOrDefault().PlayerId;
-            _context.Votes.Add(new Vote() { VotedPlayerId = votingPlayerId, VoteId = Guid.NewGuid(), VotingPlayerId = votingPlayerId });
+            _context.Votes.Add(new Vote() { VotedPlayerId = votedPlayerId, VoteId = Guid.NewGuid(), VotingPlayerId = votingPlayerId });
             //_context.Rooms.Add(room);
+            Service service = new Service();
+            service.KillPlayer(_context);
             _context.SaveChanges();
         }
 
