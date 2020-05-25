@@ -56,7 +56,7 @@ public class EndGameScreen extends AppCompatActivity {
         }
         if(statusFlag == 2){
             Log.i("winner 2", " " + statusFlag);
-            winner = "Civil";
+            winner = "Civilian";
         }
         listView = findViewById(R.id.ListView);
         whoWon.setText("Winners: " + winner);
@@ -83,11 +83,11 @@ public class EndGameScreen extends AppCompatActivity {
                             if (name != null) {
                                 if (role.equals(winner)) {
                                     Log.i("role equals winner", role + " " + winner);
-                                    tubeLines.add("Winner: " +name + ", " +"is he/she alive: " + isAlive + " " + ",  he/she was: " + role);
+                                    tubeLines.add("Winner: " +name + ", " +"is he/she alive: " + isAlive+ ",  he/she was: " + role);
                                 }
                                 else {
                                     Log.i("role equals looser", role + " " + winner);
-                                    tubeLines.add("Looser: " +name + ", " +"is he/she alive: " + isAlive + ", " + ",  he/she was:" + role);
+                                    tubeLines.add("Looser: " +name + ", " +"is he/she alive: " + isAlive+ ",  he/she was: " + role);
                                 }
                             }
                         }

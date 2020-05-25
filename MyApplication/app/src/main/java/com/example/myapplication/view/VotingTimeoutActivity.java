@@ -47,7 +47,8 @@ public class VotingTimeoutActivity extends AppCompatActivity {
         isDay = extras.getBoolean("isDay");
         gameStatus = getGameStatus();
         voteTimer = findViewById(R.id.VoteTimer);
-        MyCount counter = new MyCount(10000, 1000);
+
+        MyCount counter = new MyCount(5000, 300);
         counter.start();
 
 
@@ -154,7 +155,7 @@ public class VotingTimeoutActivity extends AppCompatActivity {
         }
         @Override
         public void onTick(long millisUntilFinished) {
-            voteTimer.setText("Left: " + millisUntilFinished / 1000);
+            //voteTimer.setText("Left: " + millisUntilFinished / 1000);
         }
     }
 }

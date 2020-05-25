@@ -1,4 +1,5 @@
-﻿using MafiaServer.Models;
+﻿using MafiaServer.Controllers;
+using MafiaServer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +51,7 @@ namespace MafiaServer.Repository
         {
             int flag;
             string mafia = "Mafia";
-            string civil = "Civil";
+            string civil = "Civilian";
             var currentRoom = _context.Players
                                             .Where(x => x.Name == votingPlayer)
                                             .FirstOrDefault().RoomId;
@@ -80,6 +81,19 @@ namespace MafiaServer.Repository
             }
             flag = 0;
             return flag;
+        }
+        
+        public void UpdateRoomParameters(MafiaContext _context, Class classResponder)
+        {
+            
+            Guid roomId = new Guid("b7afd4f1-9221-482e-966b-5456ae190100");
+            var room = _context.Rooms
+                               .Where(x => x.RoomId == roomId)
+                               .FirstOrDefault();
+            room.Name = classResponder.name;
+            room.MafiaAmount = classResponder.mafiaAmount;
+            room.CivilAmount = classResponder.civilAmount;
+            _context.SaveChanges();
         }
     }
 }

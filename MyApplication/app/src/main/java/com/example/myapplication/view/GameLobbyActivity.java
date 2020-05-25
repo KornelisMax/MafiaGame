@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -35,20 +36,30 @@ public class GameLobbyActivity extends AppCompatActivity {
     ArrayList arrayList = new ArrayList();
     String[] list;
     Button startGameButton;
+    Button exitGameLobby;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_lobby);
+        Toast.makeText(getApplicationContext(), "Your role is Civilian!",
+                Toast.LENGTH_LONG).show();
         listView = findViewById(R.id.listView);
         final ArrayList<String> tubeLines = new ArrayList<>();
         Bundle extras = getIntent().getExtras();
-        playerName = extras.getString("args");
+        //playerName = extras.getString("args");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tubeLines);
         listView.setAdapter(adapter);
         getPlayersData(tubeLines, adapter);
         startGameButton = findViewById(R.id.StartGameButton);
+        exitGameLobby = findViewById(R.id.ExitGameLobby);
+        exitGameLobby.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMainMenu();
+            }
+        });
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +108,9 @@ public class GameLobbyActivity extends AppCompatActivity {
         intent.putExtra("args", playerName);
         startActivity(intent);
     }
-
+    private void showMainMenu() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
+}
 

@@ -46,6 +46,7 @@ namespace MafiaServer.Controllers
         [Route("api/GetPlayers")]
         public List<Player> Get()
         {
+            
             //Dataset.AddSamplePlayersToDb(_context);
             return _context.Players.ToList();
         }
@@ -54,7 +55,10 @@ namespace MafiaServer.Controllers
         [Route("api/FillData")]
         public void FillData()
         {
-            Dataset.AddSamplePlayersToDb(_context);
+            _context.Players.Add(new Player() { PlayerId = new Guid(), IsAlive = true, Name = "Tomas", RoomId = new Guid("b7afd4f1-9221-482e-966b-5456ae190100"), Role = "Civilian" +
+                "" });
+            _context.SaveChanges();
+            //Dataset.AddSamplePlayersToDb(_context);
         }
 
         [HttpGet]
@@ -71,18 +75,21 @@ namespace MafiaServer.Controllers
         [Route("api/CreateNewRoom")]
         [Consumes("application/x-www-form-urlencoded")]
         public void CreateNewRoom([FromForm]Class classResponder)
-        {   
+        {
+            Service service = new Service();
             //Console.WriteLine(classResponder.name);
-            _context.Players.Add(new Player() { PlayerId = new Guid(), Name = classResponder.playerName, RoomId = new Guid("b7afd4f1-9221-482e-966b-5456ae190100") });
-            Room room = new Room()
-            {
-                RoomId = Guid.NewGuid(),
-                CivilAmount = classResponder.civilAmount,
-                MafiaAmount = classResponder.mafiaAmount,
-                Name = classResponder.name,
-                Players = _context.Players.ToList()
-            };
-            _context.Rooms.Add(room);
+            _context.Players.Add(new Player() { PlayerId = new Guid(), IsAlive = true, Name = classResponder.playerName, RoomId = new Guid("b7afd4f1-9221-482e-966b-5456ae190100"), Role = "Civilian" });
+
+            //Room room = new Room()
+            //{
+            //    RoomId = Guid.NewGuid(),
+            //    CivilAmount = classResponder.civilAmount,
+            //    MafiaAmount = classResponder.mafiaAmount,
+            //    Name = classResponder.name,
+            //    Players = _context.Players.ToList()
+            //};
+            //service.UpdateRoomParameters(_context, classResponder);
+            //_context.Rooms.Add(room);
             _context.SaveChanges();
         }
 

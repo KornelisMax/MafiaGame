@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myapplication.CreatingRoomTimeout;
 import com.example.myapplication.R;
 
 import org.json.JSONArray;
@@ -74,7 +76,9 @@ public class CreateRoomActivity extends AppCompatActivity {
                 //getPlayersData();
                 showGameLobby();
                 //sendWorkPostRequest();
-                //HttpPOSTRequestWithParameters()
+                //MyCount counter = new MyCount(10000, 300);
+                //counter.start();
+                //HttpPOSTRequestWithParameters();
 
             }
         });
@@ -142,6 +146,7 @@ public class CreateRoomActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(postRequest);
         showGameLobby();
+
     }
 
 
@@ -155,7 +160,24 @@ public class CreateRoomActivity extends AppCompatActivity {
         intent.putExtra("args", playerName);
         startActivity(intent);
     }
+    public class MyCount extends CountDownTimer {
+
+        public MyCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+        }
+
+        @Override
+        public void onFinish() {
+
+            //Log.i("HelloListView", playerNicks.get(clickedId));
+        }
+    }
 
 
-}
+    }
 

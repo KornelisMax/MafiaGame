@@ -6,4 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".view.InstructionActivity">
 
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="412dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="150dp"
+        android:text="@string/instructions" />
+
+    <Button
+        android:id="@+id/ReturnMainMenu1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="76dp"
+        android:text="Return To Main Menu" />
 </RelativeLayout>

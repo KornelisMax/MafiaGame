@@ -56,7 +56,7 @@ public class GameSessionNight extends AppCompatActivity implements AdapterView.O
         playerName = extras.getString("args");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, playerNicks);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
+        //listView.setOnItemClickListener(this);
     }
 
 

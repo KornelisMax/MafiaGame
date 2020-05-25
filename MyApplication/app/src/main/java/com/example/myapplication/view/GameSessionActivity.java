@@ -158,6 +158,9 @@ public class GameSessionActivity extends AppCompatActivity implements AdapterVie
         queue.add(postRequest);
         //showGameLobby();
     }
-
+    private void showMainMenu() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
 }
