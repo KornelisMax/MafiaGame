@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -10,7 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.CreateRoomActivity"></activity>
+        <activity android:name=".CreatingRoomTimeout"></activity>
+        <activity android:name=".view.EndGameScreen" />
+        <activity android:name=".view.VotingTimeoutActivity" />
+        <activity android:name=".view.GameSessionNight" />
+        <activity android:name=".view.GameSessionActivity" />
+        <activity android:name=".view.GameLobbyActivity" />
+        <activity android:name=".view.CreateRoomActivity" />
         <activity android:name=".view.JoinRoomActivity" />
         <activity android:name=".view.InstructionActivity" />
         <activity android:name=".view.MainActivity">

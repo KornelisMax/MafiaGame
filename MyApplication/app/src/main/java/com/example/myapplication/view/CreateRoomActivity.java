@@ -67,22 +67,29 @@ public class CreateRoomActivity extends AppCompatActivity {
         playerNameInput = findViewById(R.id.PlayerNameInput);
         cityNameInput = findViewById(R.id.CityNameInput);
         enterData = findViewById(R.id.CreateRoomButton);
-
         enterData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //sendAndRequestResponse();
-                //getPlayersData();
-                //getPlayersData();
-                showGameLobby();
-                //sendWorkPostRequest();
-                //MyCount counter = new MyCount(10000, 300);
-                //counter.start();
-                //HttpPOSTRequestWithParameters();
+                @Override
+                public void onClick(View v) {
+                    if(!mafiaAmountInput.getText().toString().isEmpty() && !civilAmountInput.getText().toString().isEmpty() && !cityNameInput.getText().toString().isEmpty() && !playerNameInput.getText().toString().isEmpty()) {
 
-            }
+                        //sendAndRequestResponse();
+                    //getPlayersData();
+                    //getPlayersData();
+                    showGameLobby();
+                    //sendWorkPostRequest();
+                    //MyCount counter = new MyCount(10000, 300);
+                    //counter.start();
+                    //HttpPOSTRequestWithParameters();
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Fill all data.", Toast.LENGTH_LONG).show();
+                    }
+
+                }
         });
+
     }
+
 
     public void HttpPOSTRequestWithParameters() {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -157,6 +164,7 @@ public class CreateRoomActivity extends AppCompatActivity {
     public void showGameLobby(){
         Intent intent = new Intent(this, GameLobbyActivity.class);
         intent.putStringArrayListExtra("arg", playerNicks);
+        intent.putExtra("GameCreator", "0");
         intent.putExtra("args", playerName);
         startActivity(intent);
     }

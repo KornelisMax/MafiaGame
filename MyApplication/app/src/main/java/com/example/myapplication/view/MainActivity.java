@@ -54,11 +54,17 @@ public class MainActivity extends AppCompatActivity {
         exitGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                System.exit(0);
+                exitGame();
             }
         });
 
+    }
+
+    private void exitGame() {
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory( Intent.CATEGORY_HOME );
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
     }
 
     private void showGameCreationMenu() {

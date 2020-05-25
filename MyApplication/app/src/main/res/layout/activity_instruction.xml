@@ -8,14 +8,15 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="412dp"
-        android:layout_height="wrap_content"
+        android:layout_width="359dp"
+        android:layout_height="238dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="152dp"
         android:text="@string/instructions" />
 
     <Button

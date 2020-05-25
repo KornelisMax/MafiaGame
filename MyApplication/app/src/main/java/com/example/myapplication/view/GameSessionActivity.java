@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -45,6 +46,8 @@ public class GameSessionActivity extends AppCompatActivity implements AdapterVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_session);
+        Toast.makeText(getApplicationContext(), "Your role is Civilian! Good Luck!",Toast.LENGTH_LONG).show();
+
         listView = findViewById(R.id.PlayerList);
         timerTextView = findViewById(R.id.TimerTextView);
         MyCount counter = new MyCount(10000, 1000);
@@ -155,6 +158,7 @@ public class GameSessionActivity extends AppCompatActivity implements AdapterVie
                 30000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         queue.add(postRequest);
         //showGameLobby();
     }

@@ -30,7 +30,8 @@ public class GameLobbyActivity extends AppCompatActivity {
     ArrayList<String> playerNicks = new ArrayList<>();
     AsyncTask<?, ?, ?> runningTask;
     ListView listView;
-    List<String> passedArg;
+
+    String gameCreatorArg;
     String name;
     String playerName;
     ArrayList arrayList = new ArrayList();
@@ -43,16 +44,18 @@ public class GameLobbyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_lobby);
-        Toast.makeText(getApplicationContext(), "Your role is Civilian!",
-                Toast.LENGTH_LONG).show();
-        listView = findViewById(R.id.listView);
-        final ArrayList<String> tubeLines = new ArrayList<>();
+
         Bundle extras = getIntent().getExtras();
-        //playerName = extras.getString("args");
+        gameCreatorArg = extras.getString("GameCreator");
+
+        final ArrayList<String> tubeLines = new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tubeLines);
+        listView = findViewById(R.id.listView);
         listView.setAdapter(adapter);
         getPlayersData(tubeLines, adapter);
-        startGameButton = findViewById(R.id.StartGameButton);
+
+
+
         exitGameLobby = findViewById(R.id.ExitGameLobby);
         exitGameLobby.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +63,13 @@ public class GameLobbyActivity extends AppCompatActivity {
                 showMainMenu();
             }
         });
+
+
+
+        startGameButton = findViewById(R.id.StartGameButton);
+        if(gameCreatorArg.equals("1")){
+            startGameButton.setVisibility(View.INVISIBLE);
+        }
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
