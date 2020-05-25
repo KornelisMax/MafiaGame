@@ -35,20 +35,7 @@ public class VotingTimeoutActivity extends AppCompatActivity {
     TextView voteTimer;
     boolean isDay;
     int gameStatus;
-    Runnable timerRunnable = new Runnable() {
 
-        @Override
-        public void run() {
-            long millis = System.currentTimeMillis() - startTime;
-            int seconds = (int) (millis / 1000);
-            int minutes = seconds / 60;
-            seconds = seconds % 60;
-
-            voteTimer.setText(String.format("%d:%02d", minutes, seconds));
-
-            timerHandler.postDelayed(this, 500);
-        }
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,11 +124,13 @@ public class VotingTimeoutActivity extends AppCompatActivity {
         public void onFinish() {
             Intent intent;
             if(gameStatus == 2){
-                intent = new Intent(VotingTimeoutActivity.this, InstructionActivity.class);
+                intent = new Intent(VotingTimeoutActivity.this, EndGameScreen.class);
+                intent.putExtra("endgame", "2");
                 startActivity(intent);
             }
             if(gameStatus == 1){
-                intent = new Intent(VotingTimeoutActivity.this, MainActivity.class);
+                intent = new Intent(VotingTimeoutActivity.this, EndGameScreen.class);
+                intent.putExtra("endgame", "1");
                 startActivity(intent);
             }
             if(gameStatus != 1 && gameStatus != 2) {

@@ -48,7 +48,6 @@ namespace MafiaServer.Repository
 
         public int WhichSideWon(MafiaContext _context, string votingPlayer)
         {
-            bool isWinningCivil;
             int flag;
             string mafia = "Mafia";
             string civil = "Civil";
@@ -82,7 +81,5 @@ namespace MafiaServer.Repository
             flag = 0;
             return flag;
         }
-
-
     }
 }

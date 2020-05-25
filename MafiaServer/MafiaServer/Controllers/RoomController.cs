@@ -56,14 +56,15 @@ namespace MafiaServer.Controllers
         {
             Dataset.AddSamplePlayersToDb(_context);
         }
-        // GET: api/Room/5
-        //[HttpGet]
-        //[Route("api/GetRooms")]
-        //public List<Room> GetRooms()
-        //{
-        //    return List < Room > n = new List<Room>
-        //        ();
-        //}
+
+        [HttpGet]
+        [Route("api/GetPlayersEndGame")]
+        public List<Player> GetAllPlayersFromRoom()
+        {
+            Guid roomId = new Guid("b7afd4f1-9221-482e-966b-5456ae190100");
+            //hardcoded roomid
+            return _context.Players.Where(x => x.RoomId == roomId).ToList();
+        }
 
         // POST: api/Room
         [HttpPost]
@@ -72,7 +73,7 @@ namespace MafiaServer.Controllers
         public void CreateNewRoom([FromForm]Class classResponder)
         {   
             //Console.WriteLine(classResponder.name);
-            _context.Players.Add(new Player() { PlayerId = new Guid(), Name = classResponder.playerName, RoomId = new Guid("49a20b2e-f469-4614-1649-08d7f90d4960") });
+            _context.Players.Add(new Player() { PlayerId = new Guid(), Name = classResponder.playerName, RoomId = new Guid("b7afd4f1-9221-482e-966b-5456ae190100") });
             Room room = new Room()
             {
                 RoomId = Guid.NewGuid(),
@@ -100,23 +101,6 @@ namespace MafiaServer.Controllers
             _context.SaveChanges();
             service.KillPlayer(_context);
         }
-
-        [HttpGet]
-        [Route("api/Vote1")]
-        [Consumes("application/x-www-form-urlencoded")]
-        public void GetWinningSide([FromForm]VoteResponder classResponder)
-        {
-            //Console.WriteLine(classResponder.name);
-            var votingPlayerId = _context.Players.Where(x => x.Name == classResponder.votingPlayer).FirstOrDefault().PlayerId;
-            var votedPlayerId = _context.Players.Where(x => x.Name == classResponder.votedPlayer).FirstOrDefault().PlayerId;
-            _context.Votes.Add(new Vote() { VotedPlayerId = votedPlayerId, VoteId = Guid.NewGuid(), VotingPlayerId = votingPlayerId });
-            //_context.Rooms.Add(room);
-            Service service = new Service();
-            service.KillPlayer(_context);
-            //service.WhichSideWon(_context, classResponder.votingPlayer);
-            _context.SaveChanges();
-        }
-
 
         // PUT: api/Room/5
         [HttpPut("{id}")]
