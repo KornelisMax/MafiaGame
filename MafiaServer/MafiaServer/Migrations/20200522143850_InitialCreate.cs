@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MafiaServer.Migrations
 {
-    public partial class initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,28 +24,28 @@ namespace MafiaServer.Migrations
                 name: "GameSession",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(nullable: false),
-                    MyProperty = table.Column<int>(nullable: false),
+                    GameSessionId = table.Column<Guid>(nullable: false),
                     GameTime = table.Column<TimeSpan>(nullable: false),
                     VoteTime = table.Column<TimeSpan>(nullable: false),
                     RoomId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GameSession", x => x.ID);
+                    table.PrimaryKey("PK_GameSession", x => x.GameSessionId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Room",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(nullable: false),
-                    GameCreatorId = table.Column<Guid>(nullable: false),
-                    GameSessionId = table.Column<Guid>(nullable: false)
+                    RoomId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    MafiaAmount = table.Column<int>(nullable: false),
+                    CivilAmount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Room", x => x.ID);
+                    table.PrimaryKey("PK_Room", x => x.RoomId);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,36 +65,28 @@ namespace MafiaServer.Migrations
                 name: "Player",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(nullable: false),
+                    PlayerId = table.Column<Guid>(nullable: false),
                     Role = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    RoomId = table.Column<Guid>(nullable: false),
                     IsAlive = table.Column<bool>(nullable: false),
                     HasVoted = table.Column<bool>(nullable: false),
-                    GameSessionId = table.Column<Guid>(nullable: false),
-                    Player = table.Column<Guid>(nullable: true)
+                    RoomId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Player", x => x.ID);
+                    table.PrimaryKey("PK_Player", x => x.PlayerId);
                     table.ForeignKey(
-                        name: "FK_Player_GameSession_Player",
-                        column: x => x.Player,
-                        principalTable: "GameSession",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Player_Room_Player",
-                        column: x => x.Player,
+                        name: "FK_Player_Room_RoomId",
+                        column: x => x.RoomId,
                         principalTable: "Room",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "RoomId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Player_Player",
+                name: "IX_Player_RoomId",
                 table: "Player",
-                column: "Player");
+                column: "RoomId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -103,13 +95,13 @@ namespace MafiaServer.Migrations
                 name: "GameCreator");
 
             migrationBuilder.DropTable(
+                name: "GameSession");
+
+            migrationBuilder.DropTable(
                 name: "Player");
 
             migrationBuilder.DropTable(
                 name: "Vote");
-
-            migrationBuilder.DropTable(
-                name: "GameSession");
 
             migrationBuilder.DropTable(
                 name: "Room");

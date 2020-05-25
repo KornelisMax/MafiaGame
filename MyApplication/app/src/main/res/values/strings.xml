@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Mafia Role Game</string>
+    <string name="instructions">During game stage \'Day\' in order to select player, press on the list. You can vote only once during the game stage.
+        Voted player is the last one you touch during the game stage. \n\n During the game stage \'Night\' only mafia and special roles can vote, civilians
+        can still press on the screen to hide their identity, but their vote won\'t change anything. \n\n Winner is determined, when civilians/mafia has no
+        alive members left.
+</string>
+
 </resources>

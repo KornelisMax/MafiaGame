@@ -9,13 +9,13 @@ import android.widget.Button;
 
 import com.example.myapplication.R;
 import com.example.myapplication.ui.main.MainFragment;
-import com.example.myapplication.view.InstructionActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button instructionButton;
     private Button createGameButton;
     private Button joinRoomButton;
+    private Button exitGameButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +49,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        exitGameButton = findViewById(R.id.LeaveGame);
+        exitGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                System.exit(0);
+            }
+        });
+
     }
 
     private void showGameCreationMenu() {

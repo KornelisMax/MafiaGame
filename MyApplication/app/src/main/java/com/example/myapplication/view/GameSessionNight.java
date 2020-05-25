@@ -5,12 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -19,74 +20,84 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.myapplication.CreatingRoomTimeout;
 import com.example.myapplication.R;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class CreateRoomActivity extends AppCompatActivity {
+public class GameSessionNight extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    EditText playerNameInput;
+    ListView listView;
+    TextView timerTextView;
+    long startTime = 0;
+    int clickedId;
+    ArrayList<String> playerNicks;
     String playerName;
-    EditText cityNameInput;
-    EditText mafiaAmountInput;
-    EditText civilAmountInput;
-    TextView textView;
-    TextView textView2;
-    TextView textView3;
-    TextView textView4;
-    String name;
+    boolean isDay;
 
-    Button enterData;
-
-    private StringRequest mStringRequest;
-    ArrayList<String> playerNicks = new ArrayList<String>();
-
+    Handler timerHandler = new Handler();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_room);
+        setContentView(R.layout.activity_game_session_night);
+        listView = findViewById(R.id.PlayerList);
+        timerTextView = findViewById(R.id.TimerTextView);
+        MyCount counter = new MyCount(10000, 1000);
+        counter.start();
 
-        textView2 = findViewById(R.id.textView2);
-        textView3 = findViewById(R.id.textView3);
-        textView4 = findViewById(R.id.textView4);
-        textView = findViewById(R.id.textView5);
-        mafiaAmountInput = findViewById(R.id.MafiaAmountInput);
-        civilAmountInput = findViewById(R.id.CivilAmountInput);
-        playerNameInput = findViewById(R.id.PlayerNameInput);
-        cityNameInput = findViewById(R.id.CityNameInput);
-        enterData = findViewById(R.id.CreateRoomButton);
 
-        enterData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //sendAndRequestResponse();
-                //getPlayersData();
-                //getPlayersData();
-                showGameLobby();
-                //sendWorkPostRequest();
-                //MyCount counter = new MyCount(10000, 300);
-                //counter.start();
-                //HttpPOSTRequestWithParameters();
-
-            }
-        });
+        Bundle extras = getIntent().getExtras();
+        playerNicks = extras.getStringArrayList("arg");
+        playerName = extras.getString("args");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, playerNicks);
+        listView.setAdapter(adapter);
+        //listView.setOnItemClickListener(this);
     }
+
+
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.i("HelloListView", playerName + "You clicked Item: " + id + " at position:" + position);
+        clickedId = (int)id;
+    }
+
+    public class MyCount extends CountDownTimer {
+
+        public MyCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onFinish() {
+            //playerName = playerNicks.get(clickedId);
+            HttpPOSTRequestWithParameters();
+            isDay = false;
+            Intent intent = new Intent(GameSessionNight.this, VotingTimeoutActivity.class);
+            Log.i("HelloListView", playerNicks.get(clickedId));
+            intent.putExtra("arg", playerNicks.get(clickedId));
+            intent.putExtra("isDay", isDay);
+            intent.putExtra("args", playerName); //current player
+            intent.putStringArrayListExtra("arg1", playerNicks);
+            startActivity(intent);
+            timerTextView.setText("done!");
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            timerTextView.setText("Left: " + millisUntilFinished / 1000);
+        }
+    }
+
 
     public void HttpPOSTRequestWithParameters() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://10.0.2.2:63439/api/CreateNewRoom";
+        String url = "http://10.0.2.2:63439/api/Vote";
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -116,13 +127,13 @@ public class CreateRoomActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("name", cityNameInput.getText().toString());
+                params.put("votedPlayer", playerNicks.get(clickedId));
+                params.put("votingPlayer", "Tomas"); //hardcoded
+                Log.i("HelloListView", playerNicks.get(clickedId));
                 // volley will escape this for you
-                playerName = playerNameInput.getText().toString();
+                //playerName = playerNameInput.getText().toString();
                 //params.put("randomFieldFilledWithAwkwardCharacters", "{{%stuffToBe Escaped/");
-                params.put("playerName", playerNameInput.getText().toString());
-                params.put("civilAmount", civilAmountInput.getText().toString());
-                params.put("mafiaAmount", mafiaAmountInput.getText().toString());
+
 
                 return params;
             }
@@ -145,39 +156,8 @@ public class CreateRoomActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(postRequest);
-        showGameLobby();
-
+        //showGameLobby();
     }
 
 
-
-
-
-
-    public void showGameLobby(){
-        Intent intent = new Intent(this, GameLobbyActivity.class);
-        intent.putStringArrayListExtra("arg", playerNicks);
-        intent.putExtra("args", playerName);
-        startActivity(intent);
-    }
-    public class MyCount extends CountDownTimer {
-
-        public MyCount(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-
-        }
-
-        @Override
-        public void onFinish() {
-
-            //Log.i("HelloListView", playerNicks.get(clickedId));
-        }
-    }
-
-
-    }
-
+}

@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MafiaServer.Controllers;
 using MafiaServer.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,7 +30,8 @@ namespace MafiaServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<MafiaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MafiaContextConnection")));
+            services.AddDbContext<MafiaContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("MafiaContext1")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

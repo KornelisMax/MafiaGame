@@ -11,12 +11,13 @@ namespace MafiaServer.Models
     public class Room
     {
         [Key]
-        public Guid ID { get; set; }
-        [ForeignKey("Player")]
-        public List<Player> Players { get; set; }
-        [ForeignKey("GameCreator")]
-        public Guid GameCreatorId { get; set; }
-        [ForeignKey("GameSession")]
-        public Guid GameSessionId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid RoomId { get; set; }
+        public string Name { get; set; }
+        public int MafiaAmount { get; set; }
+        public int CivilAmount { get; set; }
+
+
+        public virtual ICollection<Player> Players { get; set; }
     }
 }

@@ -11,10 +11,8 @@ namespace MafiaServer.Models
     public class GameSession
     {
         [Key]
-        public Guid ID { get; set; }
-        public int MyProperty { get; set; }
-        [ForeignKey("Player")]
-        public List<Player> Players { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid GameSessionId { get; set; }
         public TimeSpan GameTime { get; set; }
         public TimeSpan VoteTime { get; set; }
         [ForeignKey("Room")]
